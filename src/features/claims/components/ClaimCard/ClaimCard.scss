@@ -1,0 +1,57 @@
+@use "shared/styles/variables" as vars;
+
+.claim-card {
+  background-color: vars.$white;
+  border-radius: 8px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &__title {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: vars.$grey;
+  }
+
+  &__flag {
+    width: 18px;
+    height: 12px;
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: vars.$text-color;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__icon {
+    width: 14px;
+    height: 14px;
+    color: vars.$grey-light;
+    flex-shrink: 0;
+  }
+}

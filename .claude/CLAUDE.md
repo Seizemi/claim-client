@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Refer to README.md to project overview.
 
-**Current actual state differs from the plan above**: the repository is still the unmodified [Create React App](https://github.com/facebook/create-react-app) JavaScript scaffold — `src/App.js` etc. TypeScript and Axios are not yet installed (`package.json` has no `typescript` dependency, no `tsconfig.json`). When starting real implementation work, set up TypeScript and Axios first, and update this section once the gap between plan and reality closes.
+TypeScript, Axios, Zustand, Zod, react-router-dom, react-toastify, and Sass are installed and in use. The app is organized by feature/domain rather than by technical layer — see Architecture and File Organization below — mirroring the `ClaimApi` backend's own Modular Monolith + Claims module boundary.
 
 ## Commands
 
@@ -20,21 +20,23 @@ Refer to README.md to project overview.
 There is no separate lint command; ESLint runs as part of `react-scripts start`/`build`/`test` via the `eslintConfig` (`react-app`, `react-app/jest`) in `package.json`.
 
 ## Architecture
+- Organized by feature/domain, not by technical layer — mirrors the `ClaimApi` backend's own Modular Monolith + Claims module boundary. See File Organization below for where things live.
 - This is a React app with TypeScript
 - State management: Zustand for client state
 - Routing: React Router v6
-- API calls: Always use the useApi hook
+- API calls: Always use the `useApi` hook (`src/shared/hooks/useApi.ts`), which wraps Axios and validates responses with Zod
 - Use react-toastify to notify user
-- Validate API responses with Zod inside useApi
 - Each page or component lives in its own folder named after it, containing the component (`Name.tsx`), its styles (`Name.scss`, occasionally `.css`)
-- Always use one the color existing in Color rules section within README.md file
-- when the component has non-trivial data/state logic — a co-located custom hook `useName.tsx` that the component imports (e.g. `pages/Dashboard/Claim/DashboardClaim.tsx` + `useDashboardClaim.tsx`). When adding data-fetching or stateful logic to a page, follow this hook-extraction pattern rather than inlining it in the component.
-- Imports use absolute paths rooted at `src` (`tsconfig.json` sets `baseUrl: "./src"`), e.g. `import Login from "pages/Login/Login"
+- When the component has non-trivial data/state logic — a co-located custom hook `useName.tsx` that the component imports (e.g. `features/claims/dashboard/Dashboard.tsx` + `useDashboard.tsx`). When adding data-fetching or stateful logic to a page, follow this hook-extraction pattern rather than inlining it in the component.
+- Imports use absolute paths rooted at `src` (`tsconfig.json` sets `baseUrl: "./src"`), e.g. `import Dashboard from "features/claims/dashboard/Dashboard"`
+- Always use one of the colors existing in the Color rules section within README.md file
 
 ## File Organization
-- Components: `src/components/`
-- Pages: `src/pages/`
-- Types: `src/types/`
+- App shell (composition root, routing, layout, nav): `src/app/` (`App.tsx`, `Layout/`, `SideBar/`, `TopBar/`)
+- Cross-feature shared code — nothing domain-specific goes here: `src/shared/` (`types/`, `hooks/`, `services/`, `utils/`, `styles/`, `mocks/`, `components/icons/`)
+- Feature/domain modules, one per business domain, each owning its own types/components/pages: `src/features/<feature>/` (e.g. `src/features/claims/`, `src/features/statistics/`)
+  - A feature's pages live directly inside its folder (e.g. `src/features/claims/dashboard/`, `src/features/claims/newClaim/`) — there is no separate top-level `pages/`
+- `setupTests.ts` and `react-app-env.d.ts` stay at `src/` root (CRA/Jest convention)
 
 ## Naming Conventions
 - Components: PascalCase (`UserProfile.tsx`)

@@ -1,0 +1,74 @@
+@use "shared/styles/variables" as vars;
+
+.dashboard-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+
+  &__header {
+    background-color: vars.$white;
+    border-radius: 8px;
+    border-bottom: 2px solid transparent;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &--pink {
+      border-bottom-color: vars.$secondary-color;
+    }
+
+    &--blue {
+      border-bottom-color: vars.$main-color;
+    }
+  }
+
+  &__label {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: vars.$grey;
+    text-transform: uppercase;
+  }
+
+  &__count {
+    font-size: 14px;
+    font-weight: 700;
+    color: vars.$grey;
+  }
+
+  &__filters {
+    background-color: vars.$white;
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+
+    input {
+      border: none;
+      font-family: vars.$font-family;
+      font-size: 13px;
+      color: vars.$text-color;
+      padding: 4px 0;
+      min-width: 0;
+
+      &::placeholder {
+        color: vars.$grey-light;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
