@@ -1,5 +1,6 @@
 import ClaimCard from "features/claims/components/ClaimCard/ClaimCard";
-import { ClaimResponse, ClaimState } from "features/claims/types/claim";
+import { useDashboardColumn } from "features/claims/components/DashboardColumn/useDashboardColumn";
+import { ClaimState } from "features/claims/types/claim";
 import { ClaimColumnFilters } from "features/claims/types/claimFilters";
 import "features/claims/components/DashboardColumn/DashboardColumn.scss";
 
@@ -7,17 +8,18 @@ export interface DashboardColumnProps {
   state: ClaimState;
   label: string;
   accent: "pink" | "blue";
-  claims: ClaimResponse[];
   filters: ClaimColumnFilters;
   onFilterChange: (field: keyof ClaimColumnFilters, value: string) => void;
 }
 
-const DashboardColumn = ({ label, accent, claims, filters, onFilterChange }: DashboardColumnProps) => {
+const DashboardColumn = ({ state, label, accent, filters, onFilterChange }: DashboardColumnProps) => {
+  const { claims, totalCount, isLoadingMore, cardsContainerRef, sentinelRef } = useDashboardColumn(state, filters);
+
   return (
     <div className="dashboard-column">
       <div className={`dashboard-column__header dashboard-column__header--${accent}`}>
         <span className="dashboard-column__label">{label}</span>
-        <span className="dashboard-column__count">{claims.length}</span>
+        <span className="dashboard-column__count">{totalCount}</span>
       </div>
 
       <div className="dashboard-column__filters">
@@ -47,10 +49,12 @@ const DashboardColumn = ({ label, accent, claims, filters, onFilterChange }: Das
         />
       </div>
 
-      <div className="dashboard-column__cards">
+      <div className="dashboard-column__cards" ref={cardsContainerRef}>
         {claims.map((claim) => (
           <ClaimCard key={claim.id} claim={claim} />
         ))}
+        <div className="dashboard-column__sentinel" ref={sentinelRef} />
+        {isLoadingMore && <span className="dashboard-column__loading">Chargement...</span>}
       </div>
     </div>
   );

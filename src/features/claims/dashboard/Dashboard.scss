@@ -1,6 +1,8 @@
 .dashboard {
-  padding: 24px;
+  height: 97%;
+  min-height: 0;
+  padding: 24px 24px 0px 24px;
   display: flex;
   gap: 16px;
-  align-items: flex-start;
+  align-items: stretch;
 }

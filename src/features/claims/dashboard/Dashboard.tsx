@@ -4,7 +4,7 @@ import { CLAIM_STATUS_COLUMNS } from "features/claims/dashboard/claimStatusColum
 import "features/claims/dashboard/Dashboard.scss";
 
 const Dashboard = () => {
-  const { filtersByState, setColumnFilter, getFilteredClaims } = useDashboard();
+  const { filtersByState, setColumnFilter } = useDashboard();
 
   return (
     <div className="dashboard">
@@ -14,7 +14,6 @@ const Dashboard = () => {
           state={state}
           label={label}
           accent={accent}
-          claims={getFilteredClaims(state)}
           filters={filtersByState[state]}
           onFilterChange={(field, value) => setColumnFilter(state, field, value)}
         />
