@@ -24,7 +24,7 @@
     text-decoration: none;
 
     &--active {
-      background-color: vars.$main-color;
+      background: vars.$main-gradient;
       color: vars.$white;
     }
   }

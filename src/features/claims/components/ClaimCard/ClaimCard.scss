@@ -11,15 +11,23 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    position: relative;
+    min-height: 12px;
   }
 
   &__title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
     font-size: 13px;
-    font-weight: 700;
+    font-weight: 600;
     letter-spacing: 0.5px;
-    color: vars.$grey;
+    color: vars.$grey-light;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
   }
 
   &__flag {
@@ -27,6 +35,9 @@
     height: 12px;
     flex-shrink: 0;
     border-radius: 2px;
+    margin-left: auto;
+    position: relative;
+    z-index: 1;
   }
 
   &__row {
