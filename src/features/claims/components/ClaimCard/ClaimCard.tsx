@@ -27,7 +27,7 @@ const ClaimCard = ({ claim }: ClaimCardProps) => {
       <div className="claim-card__row">
         <span className="claim-card__info">
           <HomeIcon className="claim-card__icon" />
-          {booking.supplier.name}
+          {booking.supplier.label}
         </span>
         <span className="claim-card__info">
           <CalendarIcon className="claim-card__icon" />
@@ -38,7 +38,7 @@ const ClaimCard = ({ claim }: ClaimCardProps) => {
       <div className="claim-card__row">
         <span className="claim-card__info">
           <UserIcon className="claim-card__icon" />
-          {followedBy ?? "-"}
+          {followedBy?.label ?? "-"}
         </span>
         <span className="claim-card__info">
           <InboxIcon className="claim-card__icon" />

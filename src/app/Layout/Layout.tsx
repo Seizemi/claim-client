@@ -5,7 +5,11 @@ import { mockUser } from "shared/mocks/mockUser";
 import { TabItem } from "shared/types/navigation";
 import "app/Layout/Layout.scss";
 
-const DASHBOARD_TABS: TabItem[] = [{ key: "reclamations", label: "Réclamations", path: "/" }];
+const TOP_BAR_TABS: TabItem[] = [
+  { key: "reclamations", label: "Réclamations", path: "/" },
+  { key: "new-claim", label: "Nouvelle-réclamation", path: "/claims/new" },
+  { key: "statistics", label: "Statistiques", path: "/statistics" },
+];
 
 const Layout = () => {
   const user = mockUser;
@@ -15,7 +19,7 @@ const Layout = () => {
       <div className="layout__body">
         <SideBar />
         <div className="layout__content">
-          <TopBar tabs={DASHBOARD_TABS} user={user} />
+          <TopBar tabs={TOP_BAR_TABS} user={user} />
           <main className="layout__page">
             <Outlet />
           </main>

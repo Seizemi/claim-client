@@ -1,3 +1,36 @@
+@use "shared/styles/variables" as vars;
+
 .new-claim {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   padding: 24px;
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: vars.$main-gradient;
+    color: vars.$white;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 28px;
+    font-family: vars.$font-family;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
 }

@@ -15,6 +15,7 @@ export interface TopBarProps {
 
 const TopBar = ({ tabs, activeTabKey: activeTabKeyProp, leftSlot, user, onProfileClick, onLogout }: TopBarProps) => {
   const { isMenuOpen, toggleMenu, closeMenu, menuRef, activeTabKey } = useTopBar(tabs, activeTabKeyProp);
+  const activeTab = tabs.find((tab) => tab.key === activeTabKey);
 
   const handleProfileClick = () => {
     closeMenu();
@@ -31,14 +32,7 @@ const TopBar = ({ tabs, activeTabKey: activeTabKeyProp, leftSlot, user, onProfil
       <div className="top-bar__left">{leftSlot}</div>
 
       <nav className="top-bar__tabs">
-        {tabs.map((tab) => (
-          <span
-            key={tab.key}
-            className={`top-bar__tab${tab.key === activeTabKey ? " top-bar__tab--active" : ""}`}
-          >
-            {tab.label}
-          </span>
-        ))}
+        {activeTab && <span className="top-bar__tab top-bar__tab--active">{activeTab.label}</span>}
       </nav>
 
       <div className="top-bar__user" ref={menuRef}>

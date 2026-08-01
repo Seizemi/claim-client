@@ -1,0 +1,32 @@
+@use "shared/styles/variables" as vars;
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &__title {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: vars.$grey;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  &__card {
+    background-color: vars.$white;
+    border-radius: 8px;
+    border-bottom: 2px solid vars.$main-color;
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 20px;
+    row-gap: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+
+    @media (max-width: vars.$breakpoint-tablet) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

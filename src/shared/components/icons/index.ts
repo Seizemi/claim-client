@@ -7,6 +7,7 @@ import {
   FiHome,
   FiCalendar,
   FiInbox,
+  FiSend,
 } from "react-icons/fi";
 
 // react-icons@5's IconType returns ReactNode, which @types/react@19's stricter
@@ -20,3 +21,4 @@ export const LogOutIcon = FiLogOut as unknown as Icon;
 export const HomeIcon = FiHome as unknown as Icon;
 export const CalendarIcon = FiCalendar as unknown as Icon;
 export const InboxIcon = FiInbox as unknown as Icon;
+export const SendIcon = FiSend as unknown as Icon;

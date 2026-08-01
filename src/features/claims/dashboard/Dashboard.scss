@@ -1,3 +1,5 @@
+@use "shared/styles/variables" as vars;
+
 .dashboard {
   height: 97%;
   min-height: 0;
@@ -5,4 +7,10 @@
   display: flex;
   gap: 16px;
   align-items: stretch;
+
+  @media (max-width: vars.$breakpoint-tablet) {
+    flex-direction: column;
+    height: auto;
+    padding-bottom: 24px;
+  }
 }

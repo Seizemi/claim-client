@@ -1,0 +1,77 @@
+@use "shared/styles/variables" as vars;
+
+.form-row {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  align-items: center;
+  gap: 16px;
+  width: 80%;
+  justify-self: start;
+
+  @media (max-width: vars.$breakpoint-tablet) {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    max-width: none;
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: 350;
+    letter-spacing: 1px;
+    color: vars.$grey;
+    text-transform: uppercase;
+  }
+
+  &__control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+
+    input,
+    select,
+    textarea {
+      flex: 1;
+      min-width: 0;
+      border: none;
+      border-left: 2px solid vars.$main-color;
+      border-radius: 2px;
+      background-color: transparent;
+      font-family: vars.$font-family;
+      font-size: 13px;
+      color: vars.$text-color;
+      padding: 10px 14px;
+
+      &::placeholder {
+        color: vars.$grey-light;
+      }
+
+      &:focus {
+        outline: none;
+        border-left-color: vars.$secondary-color;
+      }
+    }
+
+    input[type="checkbox"] {
+      flex: none;
+      border-left: none;
+      width: 16px;
+      height: 16px;
+      padding: 0;
+    }
+
+    select {
+      flex: none;
+      width: 100%;
+      max-width: 280px;
+    }
+
+    input[type="date"] {
+      flex: none;
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+}

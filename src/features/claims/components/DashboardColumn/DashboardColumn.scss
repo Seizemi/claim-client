@@ -9,6 +9,11 @@
   min-height: 0;
   flex: 1;
 
+  @media (max-width: vars.$breakpoint-tablet) {
+    height: 70vh;
+    flex: none;
+  }
+
   &__header {
     background-color: vars.$white;
     border-radius: 8px;
