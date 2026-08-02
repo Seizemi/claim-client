@@ -1,6 +1,6 @@
 import { ClaimRequest } from "features/claims/types/createClaimRequest";
 import { ClaimFormState } from "features/claims/types/claimFormState";
-import { toIsoDateTime } from "shared/utils/toIsoDateTime";
+import { toDateOnlyOrNull } from "shared/utils/toDateOnlyOrNull";
 
 const toNullableText = (value: string): string | null => (value.trim() === "" ? null : value.trim());
 
@@ -41,12 +41,12 @@ export const buildClaimRequest = (form: ClaimFormState): ClaimRequest => ({
     },
   },
   claimDate: {
-    dateOfReceivedClaim: toIsoDateTime(form.dateOfReceivedClaim),
-    dateOfStartFollowUp: toIsoDateTime(form.dateOfStartFollowUp),
-    dateLastUpdate: toIsoDateTime(form.dateLastUpdate),
-    dateOfDeparture: toIsoDateTime(form.dateOfDeparture),
-    dateEndOfFollowUp: toIsoDateTime(form.dateEndOfFollowUp),
-    dateOfArrival: toIsoDateTime(form.dateOfArrival),
+    dateOfReceivedClaim: toDateOnlyOrNull(form.dateOfReceivedClaim),
+    dateOfStartFollowUp: toDateOnlyOrNull(form.dateOfStartFollowUp),
+    dateLastUpdate: toDateOnlyOrNull(form.dateLastUpdate),
+    dateOfDeparture: toDateOnlyOrNull(form.dateOfDeparture),
+    dateEndOfFollowUp: toDateOnlyOrNull(form.dateEndOfFollowUp),
+    dateOfArrival: toDateOnlyOrNull(form.dateOfArrival),
   },
   compensation: {
     customerVoucher: toNullableNumber(form.customerVoucher),

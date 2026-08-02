@@ -13,6 +13,9 @@ export type ClaimState = z.infer<typeof ClaimStateSchema>;
 export const LanguageSchema = z.enum(["Fr", "En", "Nl"]);
 export type Language = z.infer<typeof LanguageSchema>;
 
+// Mirrors ClaimApi's DateOnly fields (yyyy-MM-dd, no time/offset component).
+const DateOnlySchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/).nullable();
+
 // Mirrors ClaimApi's lookup entities (Reason/Solution/FollowedBy/RefundState/
 // CompensationReason/Service/SkissimType) — DB-backed, serialized as { id, label, value }.
 export const LookupResponseSchema = z.object({
@@ -58,12 +61,12 @@ export type BookingResponse = z.infer<typeof BookingResponseSchema>;
 
 export const ClaimDateResponseSchema = z.object({
   id: z.string(),
-  dateOfReceivedClaim: z.string().nullable(),
-  dateOfStartFollowUp: z.string().nullable(),
-  dateLastUpdate: z.string().nullable(),
-  dateOfDeparture: z.string().nullable(),
-  dateEndOfFollowUp: z.string().nullable(),
-  dateOfArrival: z.string().nullable(),
+  dateOfReceivedClaim: DateOnlySchema,
+  dateOfStartFollowUp: DateOnlySchema,
+  dateLastUpdate: DateOnlySchema,
+  dateOfDeparture: DateOnlySchema,
+  dateEndOfFollowUp: DateOnlySchema,
+  dateOfArrival: DateOnlySchema,
 });
 export type ClaimDateResponse = z.infer<typeof ClaimDateResponseSchema>;
 
@@ -104,8 +107,8 @@ export const ClaimSummaryResponseSchema = z.object({
   language: z.string(),
   bookingNumber: z.string(),
   supplierLabel: z.string(),
-  dateOfStartFollowUp: z.string().nullable(),
-  dateOfReceivedClaim: z.string().nullable(),
+  dateOfStartFollowUp: DateOnlySchema,
+  dateOfReceivedClaim: DateOnlySchema,
   supplierAkioNumber: z.number(),
   customerAkioNumber: z.number(),
   followedByLabel: z.string().nullable(),
