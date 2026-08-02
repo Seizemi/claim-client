@@ -9,3 +9,6 @@ export const LANGUAGE_FLAGS: Record<Language, FC<FlagProps>> = {
   En: GB,
   Nl: NL,
 };
+
+export const getLanguageFlag = (language: string | null | undefined): FC<FlagProps> | null =>
+  language ? (LANGUAGE_FLAGS as Record<string, FC<FlagProps>>)[language] ?? null : null;

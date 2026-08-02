@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useApi } from "shared/hooks/useApi";
-import { ClaimResponse, ClaimState, PagedClaimResponseSchema } from "features/claims/types/claim";
+import { ClaimSummaryResponse, ClaimState, PagedClaimSummaryResponseSchema } from "features/claims/types/claim";
 import { ClaimColumnFilters } from "features/claims/types/claimFilters";
 import { matchesFilter } from "features/claims/utils/matchesFilter";
 
@@ -9,8 +9,8 @@ const PAGE_SIZE = 20;
 const byStateUrl = (state: ClaimState) => `/api/v1.0/Claim/by-state/${state}`;
 
 export const useDashboardColumn = (state: ClaimState, filters: ClaimColumnFilters) => {
-  const { isLoading, request } = useApi(PagedClaimResponseSchema);
-  const [claims, setClaims] = useState<ClaimResponse[]>([]);
+  const { isLoading, request } = useApi(PagedClaimSummaryResponseSchema);
+  const [claims, setClaims] = useState<ClaimSummaryResponse[]>([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState<number | null>(null);
   const [totalCount, setTotalCount] = useState(0);
@@ -73,10 +73,10 @@ export const useDashboardColumn = (state: ClaimState, filters: ClaimColumnFilter
     () =>
       claims.filter(
         (claim) =>
-          matchesFilter(claim.booking.customer.name, filters.customerName) &&
-          matchesFilter(claim.booking.bookingNumber, filters.bookingNumber) &&
-          matchesFilter(String(claim.booking.customer.akioNumber), filters.customerAkioNumber) &&
-          matchesFilter(String(claim.booking.supplier.supplierAkioNumber), filters.supplierAkioNumber)
+          matchesFilter(claim.customerName, filters.customerName) &&
+          matchesFilter(claim.bookingNumber, filters.bookingNumber) &&
+          matchesFilter(String(claim.customerAkioNumber), filters.customerAkioNumber) &&
+          matchesFilter(String(claim.supplierAkioNumber), filters.supplierAkioNumber)
       ),
     [claims, filters]
   );

@@ -1,25 +1,33 @@
+import { KeyboardEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { CalendarIcon, HomeIcon, InboxIcon, UserIcon } from "shared/components/icons";
-import { LANGUAGE_FLAGS } from "features/claims/components/ClaimCard/languageFlags";
-import { ClaimResponse } from "features/claims/types/claim";
+import { getLanguageFlag } from "features/claims/utils/languageFlags";
+import { ClaimSummaryResponse } from "features/claims/types/claim";
 import { formatDate } from "shared/utils/formatDate";
 import "features/claims/components/ClaimCard/ClaimCard.scss";
 
 export interface ClaimCardProps {
-  claim: ClaimResponse;
+  claim: ClaimSummaryResponse;
 }
 
 const ClaimCard = ({ claim }: ClaimCardProps) => {
-  const { booking, claimDate, followedBy } = claim;
-  const FlagIcon = booking.language ? LANGUAGE_FLAGS[booking.language] : null;
-  const flag = FlagIcon ? (
-    <FlagIcon className="claim-card__flag" aria-label={booking.language ?? undefined} />
-  ) : null;
+  const navigate = useNavigate();
+  const FlagIcon = getLanguageFlag(claim.language);
+  const flag = FlagIcon ? <FlagIcon className="claim-card__flag" aria-label={claim.language} /> : null;
+
+  const goToDetails = () => navigate(`/claims/${claim.id}`);
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      goToDetails();
+    }
+  };
 
   return (
-    <div className="claim-card">
+    <div className="claim-card" role="button" tabIndex={0} onClick={goToDetails} onKeyDown={handleKeyDown}>
       <div className="claim-card__header">
         <span className="claim-card__title">
-          {booking.customer.name.toUpperCase()} / N°{booking.bookingNumber.toUpperCase()}
+          {claim.customerName.toUpperCase()} / N°{claim.bookingNumber.toUpperCase()}
         </span>
         {flag}
       </div>
@@ -27,22 +35,22 @@ const ClaimCard = ({ claim }: ClaimCardProps) => {
       <div className="claim-card__row">
         <span className="claim-card__info">
           <HomeIcon className="claim-card__icon" />
-          {booking.supplier.label}
+          {claim.supplierLabel}
         </span>
         <span className="claim-card__info">
           <CalendarIcon className="claim-card__icon" />
-          {formatDate(claimDate.dateOfStartFollowUp)}
+          {formatDate(claim.dateOfStartFollowUp)}
         </span>
       </div>
 
       <div className="claim-card__row">
         <span className="claim-card__info">
           <UserIcon className="claim-card__icon" />
-          {followedBy?.label ?? "-"}
+          {claim.followedByLabel ?? "-"}
         </span>
         <span className="claim-card__info">
           <InboxIcon className="claim-card__icon" />
-          {formatDate(claimDate.dateOfReceivedClaim)}
+          {formatDate(claim.dateOfReceivedClaim)}
         </span>
       </div>
     </div>

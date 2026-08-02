@@ -1,6 +1,6 @@
-import { NewClaimFormState } from "features/claims/newClaim/newClaimFormState";
+import { ClaimFormState } from "features/claims/types/claimFormState";
 
-export const validateNewClaim = (form: NewClaimFormState): string[] => {
+export const validateClaimForm = (form: ClaimFormState): string[] => {
   const errors: string[] = [];
 
   if (form.bookingNumber.trim() === "") {
@@ -39,8 +39,8 @@ export const validateNewClaim = (form: NewClaimFormState): string[] => {
   if (form.dateOfArrival.trim() === "") {
     errors.push("La date d'arrivée du client est requise.");
   }
-  if (form.dateOfDeparture !== "" && form.dateOfArrival !== "" && form.dateOfDeparture > form.dateOfArrival) {
-    errors.push("La date d'arrivée doit être postérieure ou égale à la date de départ.");
+  if (form.dateOfDeparture !== "" && form.dateOfArrival !== "" && form.dateOfDeparture < form.dateOfArrival) {
+    errors.push("La date de départ doit être postérieure ou égale à la date d'arrivée.");
   }
 
   return errors;

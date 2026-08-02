@@ -1,5 +1,5 @@
 import { SendIcon } from "shared/components/icons";
-import { useNewClaim } from "features/claims/newClaim/useNewClaim";
+import { useClaimDetails } from "features/claims/claimDetails/useClaimDetails";
 import InformationsSection from "features/claims/components/ClaimForm/InformationsSection";
 import CalendrierSection from "features/claims/components/ClaimForm/CalendrierSection";
 import ReclamationSection from "features/claims/components/ClaimForm/ReclamationSection";
@@ -7,8 +7,16 @@ import DedommagementSection from "features/claims/components/ClaimForm/Dedommage
 import InformationsSupplementairesSection from "features/claims/components/ClaimForm/InformationsSupplementairesSection";
 import "features/claims/components/ClaimForm/ClaimForm.scss";
 
-const NewClaim = () => {
-  const { form, onChange, submit, isLoading } = useNewClaim();
+const ClaimDetails = () => {
+  const { form, isLoading, isSubmitting, error, onChange, submit } = useClaimDetails();
+
+  if (isLoading || (!form && !error)) {
+    return <div className="claim-form">Chargement...</div>;
+  }
+
+  if (error || !form) {
+    return <div className="claim-form">Réclamation introuvable.</div>;
+  }
 
   return (
     <div className="claim-form">
@@ -19,13 +27,13 @@ const NewClaim = () => {
       <InformationsSupplementairesSection form={form} onChange={onChange} />
 
       <div className="claim-form__actions">
-        <button type="button" className="claim-form__submit" disabled={isLoading} onClick={submit}>
+        <button type="button" className="claim-form__submit" disabled={isSubmitting} onClick={submit}>
           <SendIcon />
-          Valider
+          Mettre à jour
         </button>
       </div>
     </div>
   );
 };
 
-export default NewClaim;
+export default ClaimDetails;

@@ -6,10 +6,7 @@ export interface CustomerRequest {
 }
 
 export interface SupplierRequest {
-  label: string;
-  value: string;
-  supplierAkioNumber: number;
-  serviceId: string;
+  id: string;
 }
 
 export interface BookingRequest {

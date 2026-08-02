@@ -1,8 +1,8 @@
 import FormSection from "shared/components/form/FormSection";
 import FormRow from "shared/components/form/FormRow";
-import { NewClaimSectionProps } from "features/claims/newClaim/components/NewClaimSectionProps";
+import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
 
-const InformationsSupplementairesSection = ({ form, onChange }: NewClaimSectionProps) => {
+const InformationsSupplementairesSection = ({ form, onChange }: ClaimFormSectionProps) => {
   return (
     <FormSection title="Informations supplémentaires">
       <FormRow label="Information supplémentaire client">

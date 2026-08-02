@@ -1,8 +1,8 @@
 import FormSection from "shared/components/form/FormSection";
 import FormRow from "shared/components/form/FormRow";
-import { NewClaimSectionProps } from "features/claims/newClaim/components/NewClaimSectionProps";
+import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
 
-const CalendrierSection = ({ form, onChange }: NewClaimSectionProps) => {
+const CalendrierSection = ({ form, onChange }: ClaimFormSectionProps) => {
   return (
     <FormSection title="Calendrier">
       <FormRow label="Date de réception">

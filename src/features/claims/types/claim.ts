@@ -47,7 +47,6 @@ export const BookingResponseSchema = z.object({
   id: z.string(),
   bookingNumber: z.string(),
   salesChannel: SalesChannelResponseSchema,
-  language: LanguageSchema.nullable(),
   seasonLabel: z.string().nullable(),
   seasonValue: z.string().nullable(),
   skissimType: LookupResponseSchema,
@@ -96,14 +95,33 @@ export const ClaimResponseSchema = z.object({
 });
 export type ClaimResponse = z.infer<typeof ClaimResponseSchema>;
 
-export const PagedClaimResponseSchema = z.object({
-  items: z.array(ClaimResponseSchema),
+// Mirrors ClaimApi's ClaimSummaryResponse — the flattened shape returned by the
+// dashboard's by-state list endpoint (distinct from the full ClaimResponse
+// returned by GetClaimById).
+export const ClaimSummaryResponseSchema = z.object({
+  id: z.string(),
+  customerName: z.string(),
+  language: z.string(),
+  bookingNumber: z.string(),
+  supplierLabel: z.string(),
+  dateOfStartFollowUp: z.string().nullable(),
+  dateOfReceivedClaim: z.string().nullable(),
+  supplierAkioNumber: z.number(),
+  customerAkioNumber: z.number(),
+  followedByLabel: z.string().nullable(),
+  seasonLabel: z.string().nullable(),
+  seasonValue: z.string().nullable(),
+});
+export type ClaimSummaryResponse = z.infer<typeof ClaimSummaryResponseSchema>;
+
+export const PagedClaimSummaryResponseSchema = z.object({
+  items: z.array(ClaimSummaryResponseSchema),
   pageNumber: z.number(),
   pageSize: z.number(),
   totalCount: z.number(),
   totalPages: z.number(),
 });
-export type PagedClaimResponse = z.infer<typeof PagedClaimResponseSchema>;
+export type PagedClaimSummaryResponse = z.infer<typeof PagedClaimSummaryResponseSchema>;
 
 // Mirrors ClaimApi's GetLookups response — fetched once at startup and kept in
 // memory to feed multiple-choice fields in create/update claim.

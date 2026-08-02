@@ -1,6 +1,6 @@
 import { ClaimState } from "features/claims/types/claim";
 
-export interface NewClaimFormState {
+export interface ClaimFormState {
   bookingNumber: string;
   customerName: string;
   salesChannel: string;
@@ -37,7 +37,7 @@ export interface NewClaimFormState {
   supplierSuppInfo: string;
 }
 
-export const EMPTY_NEW_CLAIM_FORM_STATE: NewClaimFormState = {
+export const EMPTY_CLAIM_FORM_STATE: ClaimFormState = {
   bookingNumber: "",
   customerName: "",
   salesChannel: "",

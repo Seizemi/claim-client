@@ -1,6 +1,23 @@
 @use "shared/styles/variables" as vars;
 
-.new-claim {
+.sales-channel-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  select {
+    flex: 1;
+  }
+
+  &__flag {
+    width: 18px;
+    height: 12px;
+    flex-shrink: 0;
+    border-radius: 2px;
+  }
+}
+
+.claim-form {
   display: flex;
   flex-direction: column;
   gap: 24px;

@@ -2,9 +2,9 @@ import FormSection from "shared/components/form/FormSection";
 import FormRow from "shared/components/form/FormRow";
 import { CLAIM_STATUS_COLUMNS } from "features/claims/dashboard/claimStatusColumns";
 import { useLookupsStore } from "features/claims/lookups/useLookupsStore";
-import { NewClaimSectionProps } from "features/claims/newClaim/components/NewClaimSectionProps";
+import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
 
-const ReclamationSection = ({ form, onChange }: NewClaimSectionProps) => {
+const ReclamationSection = ({ form, onChange }: ClaimFormSectionProps) => {
   const lookups = useLookupsStore((state) => state.data);
 
   return (

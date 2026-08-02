@@ -1,5 +1,5 @@
 import { ClaimRequest } from "features/claims/types/createClaimRequest";
-import { NewClaimFormState } from "features/claims/newClaim/newClaimFormState";
+import { ClaimFormState } from "features/claims/types/claimFormState";
 import { toIsoDateTime } from "shared/utils/toIsoDateTime";
 
 const toNullableText = (value: string): string | null => (value.trim() === "" ? null : value.trim());
@@ -17,7 +17,7 @@ const toAkioNumber = (value: string): number => {
   return value.trim() === "" || Number.isNaN(parsed) ? 0 : parsed;
 };
 
-export const buildClaimRequest = (form: NewClaimFormState): ClaimRequest => ({
+export const buildClaimRequest = (form: ClaimFormState): ClaimRequest => ({
   state: form.state as ClaimRequest["state"],
   followedById: form.followedBy === "" ? null : form.followedBy,
   reasonId: form.reason,
@@ -37,10 +37,7 @@ export const buildClaimRequest = (form: NewClaimFormState): ClaimRequest => ({
       akioNumber: toAkioNumber(form.customerAkioNumber),
     },
     supplier: {
-      label: form.supplierName.trim(),
-      value: form.supplierName.trim(),
-      supplierAkioNumber: toAkioNumber(form.supplierAkioNumber),
-      serviceId: form.service,
+      id: form.supplierName.trim(),
     },
   },
   claimDate: {
