@@ -8,7 +8,7 @@ const PAGE_SIZE = 20;
 
 const byStateUrl = (state: ClaimState) => `/api/v1.0/Claim/by-state/${state}`;
 
-export const useDashboardColumn = (state: ClaimState, filters: ClaimColumnFilters) => {
+export const useDashboardColumn = (state: ClaimState, filters: ClaimColumnFilters, seasonFilter: string) => {
   const { isLoading, request } = useApi(PagedClaimSummaryResponseSchema);
   const [claims, setClaims] = useState<ClaimSummaryResponse[]>([]);
   const [pageNumber, setPageNumber] = useState(0);
@@ -76,9 +76,10 @@ export const useDashboardColumn = (state: ClaimState, filters: ClaimColumnFilter
           matchesFilter(claim.customerName, filters.customerName) &&
           matchesFilter(claim.bookingNumber, filters.bookingNumber) &&
           matchesFilter(String(claim.customerAkioNumber), filters.customerAkioNumber) &&
-          matchesFilter(String(claim.supplierAkioNumber), filters.supplierAkioNumber)
+          matchesFilter(String(claim.supplierAkioNumber), filters.supplierAkioNumber) &&
+          (seasonFilter === "" || claim.seasonValue === seasonFilter)
       ),
-    [claims, filters]
+    [claims, filters, seasonFilter]
   );
 
   return {

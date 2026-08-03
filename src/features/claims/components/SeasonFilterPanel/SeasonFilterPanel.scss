@@ -1,0 +1,34 @@
+@use "shared/styles/variables" as vars;
+
+.season-filter-panel {
+  flex-shrink: 0;
+  width: 340px;
+  height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+
+  &__label {
+    display: block;
+    font-size: 14px;
+    color: vars.$black;
+    margin-bottom: 8px;
+  }
+
+  &__select {
+    width: 100%;
+    height: 44px;
+    padding: 0 12px;
+    border: 1px solid vars.$main-color;
+    border-radius: 6px;
+    background-color: vars.$white;
+    font-family: vars.$font-family;
+    font-size: 14px;
+    color: vars.$text-color;
+    appearance: auto;
+
+    &:focus {
+      outline: none;
+      border-color: vars.$main-color;
+    }
+  }
+}

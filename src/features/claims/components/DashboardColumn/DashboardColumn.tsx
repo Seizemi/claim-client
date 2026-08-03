@@ -10,10 +10,15 @@ export interface DashboardColumnProps {
   accent: "pink" | "blue";
   filters: ClaimColumnFilters;
   onFilterChange: (field: keyof ClaimColumnFilters, value: string) => void;
+  seasonFilter: string;
 }
 
-const DashboardColumn = ({ state, label, accent, filters, onFilterChange }: DashboardColumnProps) => {
-  const { claims, totalCount, isLoadingMore, cardsContainerRef, sentinelRef } = useDashboardColumn(state, filters);
+const DashboardColumn = ({ state, label, accent, filters, onFilterChange, seasonFilter }: DashboardColumnProps) => {
+  const { claims, totalCount, isLoadingMore, cardsContainerRef, sentinelRef } = useDashboardColumn(
+    state,
+    filters,
+    seasonFilter
+  );
 
   return (
     <div className="dashboard-column">

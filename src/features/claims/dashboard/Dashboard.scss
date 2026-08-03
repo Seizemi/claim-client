@@ -3,14 +3,59 @@
 .dashboard {
   height: 97%;
   min-height: 0;
-  padding: 24px 24px 0px 24px;
   display: flex;
-  gap: 16px;
   align-items: stretch;
 
-  @media (max-width: vars.$breakpoint-tablet) {
-    flex-direction: column;
-    height: auto;
-    padding-bottom: 24px;
+  &__content {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    padding: 24px 24px 0px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: stretch;
+
+    @media (max-width: vars.$breakpoint-tablet) {
+      flex-direction: column;
+      height: auto;
+      padding-bottom: 24px;
+    }
+  }
+
+  &__filter-toggle {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    height: 56px;
+    min-width: 56px;
+    padding: 0 17px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 28px;
+    background: vars.$main-gradient;
+    color: vars.$white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &__filter-icon {
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  &__filter-label {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
   }
 }
