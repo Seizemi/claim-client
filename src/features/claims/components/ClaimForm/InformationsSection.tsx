@@ -1,5 +1,6 @@
 import FormSection from "shared/components/form/FormSection";
 import FormRow from "shared/components/form/FormRow";
+import ClearableSelect from "shared/components/form/ClearableSelect";
 import { useLookupsStore } from "features/claims/lookups/useLookupsStore";
 import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
 import { getLanguageFlag } from "features/claims/utils/languageFlags";
@@ -29,14 +30,14 @@ const InformationsSection = ({ form, onChange }: ClaimFormSectionProps) => {
       </FormRow>
       <FormRow label="Canal de vente">
         <div className="sales-channel-field">
-          <select value={form.salesChannel} onChange={(event) => onChange("salesChannel", event.target.value)}>
+          <ClearableSelect value={form.salesChannel} onChange={(value) => onChange("salesChannel", value)}>
             <option value="">Canal de vente...</option>
             {(lookups?.salesChannels ?? []).map((option) => (
               <option key={option.id} value={option.id}>
                 {option.label}
               </option>
             ))}
-          </select>
+          </ClearableSelect>
           {SalesChannelFlag && (
             <SalesChannelFlag className="sales-channel-field__flag" aria-label={selectedSalesChannel?.language} />
           )}

@@ -9,6 +9,7 @@ import {
   FiInbox,
   FiSend,
   FiSliders,
+  FiX,
 } from "react-icons/fi";
 // Feather (react-icons/fi) has no snowflake glyph — Tabler is the closest
 // stroke-style match so the sun/snowflake pair stays visually consistent.
@@ -27,5 +28,6 @@ export const CalendarIcon = FiCalendar as unknown as Icon;
 export const InboxIcon = FiInbox as unknown as Icon;
 export const SendIcon = FiSend as unknown as Icon;
 export const SlidersIcon = FiSliders as unknown as Icon;
+export const XIcon = FiX as unknown as Icon;
 export const SunIcon = TbSun as unknown as Icon;
 export const SnowflakeIcon = TbSnowflake as unknown as Icon;

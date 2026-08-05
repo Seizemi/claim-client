@@ -1,5 +1,6 @@
 import FormSection from "shared/components/form/FormSection";
 import FormRow from "shared/components/form/FormRow";
+import ClearableSelect from "shared/components/form/ClearableSelect";
 import { CLAIM_STATUS_COLUMNS } from "features/claims/dashboard/claimStatusColumns";
 import { useLookupsStore } from "features/claims/lookups/useLookupsStore";
 import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
@@ -10,24 +11,27 @@ const ReclamationSection = ({ form, onChange }: ClaimFormSectionProps) => {
   return (
     <FormSection title="Réclamation">
       <FormRow label="Etat">
-        <select value={form.state} onChange={(event) => onChange("state", event.target.value as typeof form.state)}>
+        <ClearableSelect
+          value={form.state}
+          onChange={(value) => onChange("state", value as typeof form.state)}
+        >
           <option value="">Chercher un état...</option>
           {CLAIM_STATUS_COLUMNS.map((column) => (
             <option key={column.state} value={column.state}>
               {column.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="Agent">
-        <select value={form.followedBy} onChange={(event) => onChange("followedBy", event.target.value)}>
+        <ClearableSelect value={form.followedBy} onChange={(value) => onChange("followedBy", value)}>
           <option value="">Non assigné</option>
           {(lookups?.followedBies ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="N° Akio client">
         <input
@@ -46,34 +50,34 @@ const ReclamationSection = ({ form, onChange }: ClaimFormSectionProps) => {
         />
       </FormRow>
       <FormRow label="Prestation">
-        <select value={form.service} onChange={(event) => onChange("service", event.target.value)}>
+        <ClearableSelect value={form.service} onChange={(value) => onChange("service", value)}>
           <option value="">Prestation...</option>
           {(lookups?.services ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="Fournisseur">
-        <select value={form.supplierName} onChange={(event) => onChange("supplierName", event.target.value)}>
+        <ClearableSelect value={form.supplierName} onChange={(value) => onChange("supplierName", value)}>
           <option value="">Fournisseur...</option>
           {(lookups?.suppliers.filter((option) => option.service.id == form.service) ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="Type Skissim">
-        <select value={form.skissimType} onChange={(event) => onChange("skissimType", event.target.value)}>
+        <ClearableSelect value={form.skissimType} onChange={(value) => onChange("skissimType", value)}>
           <option value="">Type Skissim...</option>
           {(lookups?.skissimTypes ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="Produit">
         <input type="text" placeholder="Produit..." value={form.product} onChange={(event) => onChange("product", event.target.value)} />
@@ -95,24 +99,24 @@ const ReclamationSection = ({ form, onChange }: ClaimFormSectionProps) => {
         />
       </FormRow>
       <FormRow label="Raison">
-        <select value={form.reason} onChange={(event) => onChange("reason", event.target.value)}>
+        <ClearableSelect value={form.reason} onChange={(value) => onChange("reason", value)}>
           <option value="">Raison...</option>
           {(lookups?.reasons ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="Solution">
-        <select value={form.solution} onChange={(event) => onChange("solution", event.target.value)}>
+        <ClearableSelect value={form.solution} onChange={(value) => onChange("solution", value)}>
           <option value="">Solution...</option>
           {(lookups?.solutions ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
     </FormSection>
   );

@@ -1,5 +1,6 @@
 import FormSection from "shared/components/form/FormSection";
 import FormRow from "shared/components/form/FormRow";
+import ClearableSelect from "shared/components/form/ClearableSelect";
 import { useLookupsStore } from "features/claims/lookups/useLookupsStore";
 import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
 
@@ -12,24 +13,24 @@ const DedommagementSection = ({ form, onChange }: ClaimFormSectionProps) => {
         <input type="number" value={form.claimRefund} onChange={(event) => onChange("claimRefund", event.target.value)} />
       </FormRow>
       <FormRow label="Remboursement versé">
-        <select value={form.refundState} onChange={(event) => onChange("refundState", event.target.value)}>
+        <ClearableSelect value={form.refundState} onChange={(value) => onChange("refundState", value)}>
           <option value="">Remboursement versé...</option>
           {(lookups?.refundStates ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="Raison de dédommagement">
-        <select value={form.compensationReason} onChange={(event) => onChange("compensationReason", event.target.value)}>
+        <ClearableSelect value={form.compensationReason} onChange={(value) => onChange("compensationReason", value)}>
           <option value="">Raison de dédommagement...</option>
           {(lookups?.compensationReasons ?? []).map((option) => (
             <option key={option.id} value={option.id}>
               {option.label}
             </option>
           ))}
-        </select>
+        </ClearableSelect>
       </FormRow>
       <FormRow label="Avoir client">
         <input type="number" value={form.customerVoucher} onChange={(event) => onChange("customerVoucher", event.target.value)} />

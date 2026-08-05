@@ -10,13 +10,13 @@ const SideBar = () => {
           key={key}
           to={to}
           end={to === "/"}
-          title={label}
           aria-label={label}
           className={({ isActive }) =>
             `side-bar__item${isActive ? " side-bar__item--active" : ""}`
           }
         >
           <Icon className="side-bar__icon" />
+          <span className="side-bar__tooltip">{label}</span>
         </NavLink>
       ))}
     </nav>
