@@ -1,0 +1,17 @@
+@use "shared/styles/variables" as vars;
+
+.stat-card {
+  background-color: vars.$white;
+  border-radius: 8px;
+  border-bottom: 2px solid vars.$main-color;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  display: flex;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
+
+  @media (max-width: vars.$breakpoint-tablet) {
+    flex-direction: column;
+  }
+}

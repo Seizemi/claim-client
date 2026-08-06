@@ -1,0 +1,33 @@
+@use "shared/styles/variables" as vars;
+
+.claim-count-legend {
+  &__title {
+    margin: 0 0 12px 0;
+    font-size: 14px;
+    color: vars.$black;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: vars.$text-color;
+  }
+
+  &__swatch {
+    width: 16px;
+    height: 3px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+}

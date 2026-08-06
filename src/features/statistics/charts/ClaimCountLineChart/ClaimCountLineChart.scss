@@ -1,0 +1,22 @@
+@use "shared/styles/variables" as vars;
+
+.claim-count-line-chart {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  &__title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: vars.$black;
+    text-align: center;
+  }
+
+  &__canvas {
+    position: relative;
+    height: 320px;
+  }
+}

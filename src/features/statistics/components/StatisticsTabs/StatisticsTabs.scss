@@ -1,0 +1,30 @@
+@use "shared/styles/variables" as vars;
+
+.statistics-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  padding: 20px 0;
+
+  &__tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0 0 12px 0;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: vars.$grey-light;
+    cursor: pointer;
+    font-family: vars.$font-family;
+
+    &--active {
+      color: vars.$secondary-color;
+      border-bottom-color: vars.$secondary-color;
+    }
+
+    &:hover:not(.statistics-tabs__tab--active) {
+      color: vars.$grey;
+    }
+  }
+}
