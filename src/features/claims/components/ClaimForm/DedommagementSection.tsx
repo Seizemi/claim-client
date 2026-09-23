@@ -4,16 +4,21 @@ import ClearableSelect from "shared/components/form/ClearableSelect";
 import { useLookupsStore } from "features/claims/lookups/useLookupsStore";
 import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
 
-const DedommagementSection = ({ form, onChange }: ClaimFormSectionProps) => {
+const DedommagementSection = ({ form, onChange, disabled = false }: ClaimFormSectionProps) => {
   const lookups = useLookupsStore((state) => state.data);
 
   return (
     <FormSection title="Dédommagement">
       <FormRow label="Montant remboursé">
-        <input type="number" value={form.claimRefund} onChange={(event) => onChange("claimRefund", event.target.value)} />
+        <input
+          type="number"
+          value={form.claimRefund}
+          onChange={(event) => onChange("claimRefund", event.target.value)}
+          disabled={disabled}
+        />
       </FormRow>
       <FormRow label="Remboursement versé">
-        <ClearableSelect value={form.refundState} onChange={(value) => onChange("refundState", value)}>
+        <ClearableSelect value={form.refundState} onChange={(value) => onChange("refundState", value)} disabled={disabled}>
           <option value="">Remboursement versé...</option>
           {(lookups?.refundStates ?? []).map((option) => (
             <option key={option.id} value={option.id}>
@@ -23,7 +28,11 @@ const DedommagementSection = ({ form, onChange }: ClaimFormSectionProps) => {
         </ClearableSelect>
       </FormRow>
       <FormRow label="Raison de dédommagement">
-        <ClearableSelect value={form.compensationReason} onChange={(value) => onChange("compensationReason", value)}>
+        <ClearableSelect
+          value={form.compensationReason}
+          onChange={(value) => onChange("compensationReason", value)}
+          disabled={disabled}
+        >
           <option value="">Raison de dédommagement...</option>
           {(lookups?.compensationReasons ?? []).map((option) => (
             <option key={option.id} value={option.id}>
@@ -33,17 +42,28 @@ const DedommagementSection = ({ form, onChange }: ClaimFormSectionProps) => {
         </ClearableSelect>
       </FormRow>
       <FormRow label="Avoir client">
-        <input type="number" value={form.customerVoucher} onChange={(event) => onChange("customerVoucher", event.target.value)} />
+        <input
+          type="number"
+          value={form.customerVoucher}
+          onChange={(event) => onChange("customerVoucher", event.target.value)}
+          disabled={disabled}
+        />
       </FormRow>
       <FormRow label="Avoir client utilisé">
         <input
           type="number"
           value={form.customerUsedVoucher}
           onChange={(event) => onChange("customerUsedVoucher", event.target.value)}
+          disabled={disabled}
         />
       </FormRow>
       <FormRow label="Remboursement fournisseur">
-        <input type="number" value={form.supplierRefund} onChange={(event) => onChange("supplierRefund", event.target.value)} />
+        <input
+          type="number"
+          value={form.supplierRefund}
+          onChange={(event) => onChange("supplierRefund", event.target.value)}
+          disabled={disabled}
+        />
       </FormRow>
     </FormSection>
   );

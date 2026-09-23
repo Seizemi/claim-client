@@ -1,0 +1,22 @@
+@use "shared/styles/variables" as vars;
+
+.claim-form__cancel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: vars.$grey;
+  border: 1px solid vars.$grey-light;
+  border-radius: 999px;
+  padding: 14px 28px;
+  font-family: vars.$font-family;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+
+  &:hover {
+    background: vars.$grey-extremely-light;
+  }
+}

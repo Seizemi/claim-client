@@ -23,9 +23,15 @@
   gap: 24px;
   padding: 24px;
 
+  &__header {
+    display: flex;
+    justify-content: flex-end;
+  }
+
   &__actions {
     display: flex;
     justify-content: flex-end;
+    gap: 12px;
   }
 
   &__submit {

@@ -95,8 +95,27 @@ export const ClaimResponseSchema = z.object({
   booking: BookingResponseSchema,
   claimDate: ClaimDateResponseSchema,
   compensation: CompensationResponseSchema,
+  isLocked: z.boolean(),
+  lockedByUserName: z.string().nullable(),
+  lockedAt: z.string().nullable(),
 });
 export type ClaimResponse = z.infer<typeof ClaimResponseSchema>;
+
+// Mirrors ClaimApi's AcquireClaimLock endpoint (POST .../lock). Must return
+// HTTP 200 in all cases (including "already locked by someone else") — never
+// 409/423 — since useApi's catch-all error handler can't distinguish status
+// codes and would mask the "locked by another user" toast otherwise.
+// `lockedBy*` reflect the current holder whether or not this call acquired the
+// lock; `claim` is only populated when `acquired` is true, letting the client
+// refresh the form without a second round-trip.
+export const LockAcquireResponseSchema = z.object({
+  acquired: z.boolean(),
+  lockedByUserId: z.string().nullable(),
+  lockedByUserName: z.string().nullable(),
+  lockedAt: z.string().nullable(),
+  claim: ClaimResponseSchema.nullable(),
+});
+export type LockAcquireResponse = z.infer<typeof LockAcquireResponseSchema>;
 
 // Mirrors ClaimApi's ClaimSummaryResponse — the flattened shape returned by the
 // dashboard's by-state list endpoint (distinct from the full ClaimResponse

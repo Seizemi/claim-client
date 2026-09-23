@@ -55,6 +55,9 @@ const buildClaim = (overrides: ClaimOverrides = {}): ClaimResponse => ({
     refundState: lookup("Refund state"),
     compensationReason: lookup("Compensation reason"),
   },
+  isLocked: false,
+  lockedByUserName: null,
+  lockedAt: null,
 });
 
 test("returns empty breakdowns for an empty claim list", () => {

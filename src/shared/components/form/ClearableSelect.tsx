@@ -7,18 +7,19 @@ export interface ClearableSelectProps extends Omit<SelectHTMLAttributes<HTMLSele
   onChange: (value: string) => void;
 }
 
-const ClearableSelect = ({ value, onChange, className, children, ...rest }: ClearableSelectProps) => {
+const ClearableSelect = ({ value, onChange, className, children, disabled, ...rest }: ClearableSelectProps) => {
   return (
     <div className="clearable-select">
       <select
         {...rest}
+        disabled={disabled}
         value={value}
         onChange={(event) => onChange(event.target.value)}
         className={`clearable-select__select${className ? ` ${className}` : ""}`}
       >
         {children}
       </select>
-      {value !== "" && (
+      {value !== "" && !disabled && (
         <button
           type="button"
           className="clearable-select__clear"

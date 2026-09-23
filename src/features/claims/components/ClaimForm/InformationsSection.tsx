@@ -5,7 +5,7 @@ import { useLookupsStore } from "features/claims/lookups/useLookupsStore";
 import { ClaimFormSectionProps } from "features/claims/components/ClaimForm/ClaimFormSectionProps";
 import { getLanguageFlag } from "features/claims/utils/languageFlags";
 
-const InformationsSection = ({ form, onChange }: ClaimFormSectionProps) => {
+const InformationsSection = ({ form, onChange, disabled = false }: ClaimFormSectionProps) => {
   const lookups = useLookupsStore((state) => state.data);
   const selectedSalesChannel = (lookups?.salesChannels ?? []).find((channel) => channel.id === form.salesChannel);
   const SalesChannelFlag = getLanguageFlag(selectedSalesChannel?.language);
@@ -18,6 +18,7 @@ const InformationsSection = ({ form, onChange }: ClaimFormSectionProps) => {
           placeholder="N° du dossier..."
           value={form.bookingNumber}
           onChange={(event) => onChange("bookingNumber", event.target.value)}
+          disabled={disabled}
         />
       </FormRow>
       <FormRow label="Nom du client">
@@ -26,11 +27,16 @@ const InformationsSection = ({ form, onChange }: ClaimFormSectionProps) => {
           placeholder="Nom du client..."
           value={form.customerName}
           onChange={(event) => onChange("customerName", event.target.value)}
+          disabled={disabled}
         />
       </FormRow>
       <FormRow label="Canal de vente">
         <div className="sales-channel-field">
-          <ClearableSelect value={form.salesChannel} onChange={(value) => onChange("salesChannel", value)}>
+          <ClearableSelect
+            value={form.salesChannel}
+            onChange={(value) => onChange("salesChannel", value)}
+            disabled={disabled}
+          >
             <option value="">Canal de vente...</option>
             {(lookups?.salesChannels ?? []).map((option) => (
               <option key={option.id} value={option.id}>
@@ -44,10 +50,20 @@ const InformationsSection = ({ form, onChange }: ClaimFormSectionProps) => {
         </div>
       </FormRow>
       <FormRow label="Date d'arrivée du client">
-        <input type="date" value={form.dateOfArrival} onChange={(event) => onChange("dateOfArrival", event.target.value)} />
+        <input
+          type="date"
+          value={form.dateOfArrival}
+          onChange={(event) => onChange("dateOfArrival", event.target.value)}
+          disabled={disabled}
+        />
       </FormRow>
       <FormRow label="Date de départ du client">
-        <input type="date" value={form.dateOfDeparture} onChange={(event) => onChange("dateOfDeparture", event.target.value)} />
+        <input
+          type="date"
+          value={form.dateOfDeparture}
+          onChange={(event) => onChange("dateOfDeparture", event.target.value)}
+          disabled={disabled}
+        />
       </FormRow>
     </FormSection>
   );
