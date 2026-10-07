@@ -1,5 +1,6 @@
 import { LogOutIcon, UserIcon } from "shared/components/icons";
 import { useTopBar } from "app/TopBar/useTopBar";
+import SignOutButton from "features/auth/SignOutButton/SignOutButton";
 import { AppUser } from "shared/types/user";
 import { TabItem } from "shared/types/navigation";
 import "app/TopBar/TopBar.scss";
@@ -10,21 +11,15 @@ export interface TopBarProps {
   leftSlot?: React.ReactNode;
   user: AppUser;
   onProfileClick?: () => void;
-  onLogout?: () => void;
 }
 
-const TopBar = ({ tabs, activeTabKey: activeTabKeyProp, leftSlot, user, onProfileClick, onLogout }: TopBarProps) => {
+const TopBar = ({ tabs, activeTabKey: activeTabKeyProp, leftSlot, user, onProfileClick }: TopBarProps) => {
   const { isMenuOpen, toggleMenu, closeMenu, menuRef, activeTabKey } = useTopBar(tabs, activeTabKeyProp);
   const activeTab = tabs.find((tab) => tab.key === activeTabKey);
 
   const handleProfileClick = () => {
     closeMenu();
     onProfileClick?.();
-  };
-
-  const handleLogout = () => {
-    closeMenu();
-    onLogout?.();
   };
 
   return (
@@ -46,10 +41,10 @@ const TopBar = ({ tabs, activeTabKey: activeTabKeyProp, leftSlot, user, onProfil
               <UserIcon className="top-bar__menu-icon" />
               Mon profil
             </button>
-            <button type="button" className="top-bar__menu-item" onClick={handleLogout}>
+            <SignOutButton className="top-bar__menu-item">
               <LogOutIcon className="top-bar__menu-icon" />
               Deconnexion
-            </button>
+            </SignOutButton>
           </div>
         )}
       </div>

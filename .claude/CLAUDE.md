@@ -10,7 +10,7 @@ TypeScript, Axios, Zustand, Zod, react-router-dom, react-toastify, and Sass are 
 
 ## Commands
 
-- `npm start` — run the dev server at http://localhost:3000 with hot reload
+- `npm start` — run the dev server (port 3000) with hot reload. Open the app at https://localhost:7001 (the ClaimApi backend, which forwards to this server), never at port 3000: API calls and sign-in only work through the backend
 - `npm test` — run the test runner via Jest in interactive watch mode (react-scripts test)
 - `npm test -- --watchAll=false` — run the full test suite once, non-interactively (useful for CI-style verification)
 - `npm test -- App.test.js` — run a single test file
@@ -26,6 +26,7 @@ There is no separate lint command; ESLint runs as part of `react-scripts start`/
 - Routing: React Router v6
 - API calls: Always use the `useApi` hook (`src/shared/hooks/useApi.ts`), which wraps Axios and validates responses with Zod
 - Use react-toastify to notify user
+- Authentication (BFF): the backend owns the session in an HttpOnly cookie; the app has no identity library and never sees a token. All API calls go through `httpClient` (relative URLs; it adds `X-CSRF: 1` on POST/PUT/PATCH/DELETE, redirects to `/auth/login` on 401 and rejects other errors as `ApiError`). Who the user is comes from `useCurrentUser` (`features/auth`, filled by `AuthGate` from `GET /api/me`); role checks in the UI only hide features, the backend enforces them. Sign-out is always `SignOutButton` (a form POST to `/auth/logout`), never a request
 - Each page or component lives in its own folder named after it, containing the component (`Name.tsx`), its styles (`Name.scss`, occasionally `.css`)
 - When the component has non-trivial data/state logic — a co-located custom hook `useName.tsx` that the component imports (e.g. `features/claims/dashboard/Dashboard.tsx` + `useDashboard.tsx`). When adding data-fetching or stateful logic to a page, follow this hook-extraction pattern rather than inlining it in the component.
 - Imports use absolute paths rooted at `src` (`tsconfig.json` sets `baseUrl: "./src"`), e.g. `import Dashboard from "features/claims/dashboard/Dashboard"`
@@ -33,7 +34,7 @@ There is no separate lint command; ESLint runs as part of `react-scripts start`/
 
 ## File Organization
 - App shell (composition root, routing, layout, nav): `src/app/` (`App.tsx`, `Layout/`, `SideBar/`, `TopBar/`)
-- Cross-feature shared code — nothing domain-specific goes here: `src/shared/` (`types/`, `hooks/`, `services/`, `utils/`, `styles/`, `mocks/`, `components/icons/`)
+- Cross-feature shared code — nothing domain-specific goes here: `src/shared/` (`types/`, `hooks/`, `services/`, `utils/`, `styles/`, `testing/`, `components/icons/`)
 - Feature/domain modules, one per business domain, each owning its own types/components/pages: `src/features/<feature>/` (e.g. `src/features/claims/`, `src/features/statistics/`)
   - A feature's pages live directly inside its folder (e.g. `src/features/claims/dashboard/`, `src/features/claims/newClaim/`) — there is no separate top-level `pages/`
 - `setupTests.ts` and `react-app-env.d.ts` stay at `src/` root (CRA/Jest convention)

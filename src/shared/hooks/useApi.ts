@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import { AxiosRequestConfig } from "axios";
 import { toast } from "react-toastify";
 import { z } from "zod";
+import { isApiError } from "shared/services/apiError";
 import { httpClient } from "shared/services/httpClient";
 
 export interface UseApiOptions {
@@ -30,7 +31,9 @@ export const useApi = <T>(schema: z.ZodType<T>, options?: UseApiOptions) => {
         const message =
           err instanceof z.ZodError
             ? "Réponse du serveur invalide"
-            : "Une erreur est survenue lors de la communication avec le serveur";
+            : isApiError(err, 403)
+              ? "Vous n'avez pas les droits nécessaires pour cette action."
+              : "Une erreur est survenue lors de la communication avec le serveur";
         const handled = onErrorRef.current?.(err) ?? false;
         if (!handled) {
           toast.error(message);

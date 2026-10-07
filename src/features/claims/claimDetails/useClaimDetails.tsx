@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import { z } from "zod";
 import { useApi } from "shared/hooks/useApi";
-import { apiBaseUrl } from "shared/services/httpClient";
+import { isApiError } from "shared/services/apiError";
+import { CSRF_HEADER_NAME, CSRF_HEADER_VALUE } from "shared/services/httpClient";
+import { onBeforeSignOut } from "shared/services/signOutHandlers";
 import { ClaimResponseSchema, LockAcquireResponseSchema } from "features/claims/types/claim";
 import { ClaimFormState } from "features/claims/types/claimFormState";
 import { buildClaimRequest } from "features/claims/utils/buildClaimRequest";
 import { validateClaimForm } from "features/claims/utils/validateClaimForm";
 import { mapClaimResponseToFormState } from "features/claims/utils/mapClaimResponseToFormState";
-import { CURRENT_USER_ID, CURRENT_USER_NAME } from "features/claims/currentUser";
 
 const claimDetailsRoute = (id: string) => `/api/v1.0/Claim/claim-details/${id}/information`;
 const claimLockRoute = (id: string) => `/api/v1.0/Claim/claim-details/${id}/lock`;
@@ -35,7 +35,7 @@ export const useClaimDetails = () => {
   const { isLoading: isFetching, error: fetchError, request: fetchClaim } = useApi(ClaimResponseSchema);
   const { isLoading: isSubmitting, request: updateClaim } = useApi(EmptyResponseSchema, {
     onError: (err) => {
-      if (axios.isAxiosError(err) && err.response?.status === 409) {
+      if (isApiError(err, 409)) {
         toast.error("Réclamation bloquée par un autre utilisateur, vos modifications n'ont pas été enregistrées.");
         return true;
       }
@@ -62,20 +62,34 @@ export const useClaimDetails = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  // Releases the lock via a beacon when the user leaves without submitting or
-  // cancelling: covers both React-router unmount (nav away, id change) and
-  // pagehide (tab close/refresh), since unmount alone isn't reliable there.
+  // Releases the lock when the user leaves without submitting or cancelling:
+  // covers React-router unmount (nav away, id change), pagehide (tab
+  // close/refresh), since unmount alone isn't reliable there, and sign-out,
+  // which must release before the form is posted: pagehide comes after the
+  // session cookie is deleted, too late to identify the lock holder. A
+  // keepalive fetch outlives the page like navigator.sendBeacon, but can send
+  // the CSRF header the backend requires (sendBeacon can't set headers).
   useEffect(() => {
-    const releaseLockBeacon = () => {
+    const releaseLockOnLeave = () => {
       if (isEditingRef.current && id) {
-        const body = new Blob([JSON.stringify({ userId: CURRENT_USER_ID })], { type: "application/json" });
-        navigator.sendBeacon(`${apiBaseUrl}${claimUnlockRoute(id)}`, body);
+        // Release once, even when sign-out is followed by pagehide.
+        isEditingRef.current = false;
+        fetch(claimUnlockRoute(id), {
+          method: "POST",
+          keepalive: true,
+          credentials: "same-origin",
+          headers: { [CSRF_HEADER_NAME]: CSRF_HEADER_VALUE },
+        }).catch(() => {
+          // Best effort: an unreleased lock expires on its own after 15 minutes.
+        });
       }
     };
-    window.addEventListener("pagehide", releaseLockBeacon);
+    window.addEventListener("pagehide", releaseLockOnLeave);
+    const removeSignOutHandler = onBeforeSignOut(releaseLockOnLeave);
     return () => {
-      window.removeEventListener("pagehide", releaseLockBeacon);
-      releaseLockBeacon();
+      window.removeEventListener("pagehide", releaseLockOnLeave);
+      removeSignOutHandler();
+      releaseLockOnLeave();
     };
   }, [id]);
 
@@ -90,7 +104,6 @@ export const useClaimDetails = () => {
     const result = await lockRequest({
       method: "POST",
       url: claimLockRoute(id),
-      data: { userId: CURRENT_USER_ID, userName: CURRENT_USER_NAME },
     });
     if (!result) {
       return;
@@ -113,7 +126,7 @@ export const useClaimDetails = () => {
     }
     setForm(originalForm);
     setIsEditing(false);
-    unlockRequest({ method: "POST", url: claimUnlockRoute(id), data: { userId: CURRENT_USER_ID } });
+    unlockRequest({ method: "POST", url: claimUnlockRoute(id) });
   };
 
   const submit = async () => {
@@ -139,7 +152,7 @@ export const useClaimDetails = () => {
     if (succeeded) {
       setIsEditing(false);
       toast.success("Réclamation mise à jour avec succès.");
-      await unlockRequest({ method: "POST", url: claimUnlockRoute(id), data: { userId: CURRENT_USER_ID } });
+      await unlockRequest({ method: "POST", url: claimUnlockRoute(id) });
       navigate("/");
     }
   };

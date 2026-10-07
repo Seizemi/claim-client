@@ -1,7 +1,6 @@
 import { ClaimRequest } from "features/claims/types/createClaimRequest";
 import { ClaimFormState } from "features/claims/types/claimFormState";
 import { toDateOnlyOrNull } from "shared/utils/toDateOnlyOrNull";
-import { CURRENT_USER_ID } from "features/claims/currentUser";
 
 const toNullableText = (value: string): string | null => (value.trim() === "" ? null : value.trim());
 
@@ -57,5 +56,4 @@ export const buildClaimRequest = (form: ClaimFormState): ClaimRequest => ({
     refundStateId: form.refundState,
     compensationReasonId: form.compensationReason,
   },
-  editingUserId: CURRENT_USER_ID,
 });

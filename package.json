@@ -2,7 +2,6 @@
   "name": "react-app-create-with-claude",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080",
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
@@ -53,5 +52,10 @@
     "@types/react-dom": "^19.2.3",
     "sass": "^1.101.0",
     "typescript": "^5.9.3"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   }
 }
