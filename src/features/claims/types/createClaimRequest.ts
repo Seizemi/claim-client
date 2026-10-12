@@ -49,5 +49,4 @@ export interface ClaimRequest {
   booking: BookingRequest;
   claimDate: ClaimDateRequest;
   compensation: CompensationRequest;
-  editingUserId: string;
 }

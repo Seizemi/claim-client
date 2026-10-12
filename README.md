@@ -66,8 +66,8 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Runs the app in the development mode (dev server on port 3000, no browser opened).\
+Start the ClaimApi backend too, then open [https://localhost:7001](https://localhost:7001): the backend signs you in and forwards every page request to this dev server, so the session cookie and the API share one origin (see ClaimApi/README.md, "Run with sign-in").
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.

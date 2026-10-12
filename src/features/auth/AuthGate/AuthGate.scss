@@ -1,0 +1,43 @@
+@use "shared/styles/variables" as vars;
+
+.auth-gate {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background-color: vars.$background-color;
+  font-family: vars.$font-family;
+
+  &__spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid vars.$grey-very-light;
+    border-top-color: vars.$main-color;
+    border-radius: 50%;
+    animation: auth-gate-spin 0.8s linear infinite;
+  }
+
+  &__message {
+    margin: 0;
+    color: vars.$text-color;
+    font-size: 14px;
+  }
+
+  &__retry {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    background: vars.$main-gradient;
+    color: vars.$white;
+    font-size: 14px;
+    cursor: pointer;
+  }
+}
+
+@keyframes auth-gate-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

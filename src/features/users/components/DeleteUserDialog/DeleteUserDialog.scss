@@ -1,0 +1,45 @@
+@use "shared/styles/variables" as vars;
+
+.delete-user {
+  &__text {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+    color: vars.$text-color;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+
+  &__cancel,
+  &__confirm {
+    padding: 10px 24px;
+    border-radius: 999px;
+    font-family: vars.$font-family;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  &__cancel {
+    border: 1px solid vars.$grey-very-light;
+    background-color: vars.$white;
+    color: vars.$grey;
+  }
+
+  &__confirm {
+    border: none;
+    background-color: vars.$error;
+    color: vars.$white;
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
