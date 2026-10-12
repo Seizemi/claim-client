@@ -1,0 +1,60 @@
+@use "shared/styles/variables" as vars;
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background-color: rgba(51, 51, 51, 0.4);
+
+  &__panel {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px 28px;
+    border-radius: 8px;
+    border-bottom: 2px solid vars.$main-color;
+    background-color: vars.$white;
+    font-family: vars.$font-family;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: vars.$grey;
+    text-transform: uppercase;
+  }
+
+  &__close {
+    display: flex;
+    padding: 4px;
+    border: none;
+    background: none;
+    color: vars.$grey-light;
+    cursor: pointer;
+
+    &:hover {
+      color: vars.$black;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+}

@@ -1,11 +1,15 @@
 import { NavLink } from "react-router-dom";
 import { NAV_ITEMS } from "app/SideBar/sideBarNavItems";
+import { useCurrentUser } from "features/auth/useCurrentUser";
 import "app/SideBar/SideBar.scss";
 
 const SideBar = () => {
+  const { hasRole } = useCurrentUser();
+  const visibleItems = NAV_ITEMS.filter(({ requiredRole }) => !requiredRole || hasRole(requiredRole));
+
   return (
     <nav className="side-bar">
-      {NAV_ITEMS.map(({ key, to, label, Icon }) => (
+      {visibleItems.map(({ key, to, label, Icon }) => (
         <NavLink
           key={key}
           to={to}

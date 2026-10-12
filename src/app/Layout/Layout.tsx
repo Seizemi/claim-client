@@ -12,6 +12,7 @@ const TOP_BAR_TABS: TabItem[] = [
   { key: "reclamations", label: "Réclamations", path: "/" },
   { key: "new-claim", label: "Nouvelle-réclamation", path: "/claims/new" },
   { key: "statistics", label: "Statistiques", path: "/statistics" },
+  { key: "users", label: "Utilisateurs", path: "/admin/users" },
 ];
 
 const Layout = () => {

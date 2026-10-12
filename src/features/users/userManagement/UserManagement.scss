@@ -1,0 +1,117 @@
+@use "shared/styles/variables" as vars;
+
+.user-management {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+  font-family: vars.$font-family;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: vars.$grey;
+    text-transform: uppercase;
+  }
+
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  &__refresh {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 22px;
+    border: 1px solid vars.$main-color;
+    border-radius: 999px;
+    background-color: vars.$white;
+    color: vars.$main-color;
+    font-family: vars.$font-family;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    &:disabled {
+      border-color: vars.$grey-very-light;
+      color: vars.$grey-light;
+      cursor: default;
+    }
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__create {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 999px;
+    background: vars.$main-gradient;
+    color: vars.$white;
+    font-family: vars.$font-family;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  &__card {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border-bottom: 2px solid vars.$main-color;
+    background-color: vars.$white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+  }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 0;
+    padding: 16px;
+    font-size: 14px;
+    color: vars.$text-color;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  &__retry {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 8px;
+    background: vars.$main-gradient;
+    color: vars.$white;
+    font-size: 13px;
+    cursor: pointer;
+  }
+}

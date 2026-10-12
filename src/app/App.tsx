@@ -6,6 +6,9 @@ import Dashboard from "features/claims/dashboard/Dashboard";
 import Statistics from "features/statistics/Statistics";
 import NewClaim from "features/claims/newClaim/NewClaim";
 import ClaimDetails from "features/claims/claimDetails/ClaimDetails";
+import RequireRole from "features/auth/RequireRole/RequireRole";
+import { ROLES } from "features/auth/types/currentUser";
+import UserManagement from "features/users/userManagement/UserManagement";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -18,6 +21,14 @@ function App() {
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/claims/new" element={<NewClaim />} />
             <Route path="/claims/:id" element={<ClaimDetails />} />
+            <Route
+              path="/admin/users"
+              element={
+                <RequireRole role={ROLES.SUPERVISOR}>
+                  <UserManagement />
+                </RequireRole>
+              }
+            />
           </Route>
         </Routes>
       </AuthGate>
