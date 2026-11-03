@@ -40,15 +40,24 @@ const buildWeeklyLanguageCounts = (claims: ClaimResponse[]): WeeklyLanguageCount
     countsByWeek.set(week.sortKey, entry);
   });
 
+  // Each week shows the running total since the start of the season, not that week's own claims.
+  const cumulated = { Fr: 0, Nl: 0, En: 0 };
+
   return Array.from(countsByWeek.entries())
     .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0))
-    .map(([, entry]) => ({
-      week: entry.label,
-      Fr: entry.Fr,
-      Nl: entry.Nl,
-      En: entry.En,
-      total: entry.Fr + entry.Nl + entry.En,
-    }));
+    .map(([, entry]) => {
+      cumulated.Fr += entry.Fr;
+      cumulated.Nl += entry.Nl;
+      cumulated.En += entry.En;
+
+      return {
+        week: entry.label,
+        Fr: cumulated.Fr,
+        Nl: cumulated.Nl,
+        En: cumulated.En,
+        total: cumulated.Fr + cumulated.Nl + cumulated.En,
+      };
+    });
 };
 
 const buildStatusBreakdown = (claims: ClaimResponse[]): CategoryBreakdown[] => {

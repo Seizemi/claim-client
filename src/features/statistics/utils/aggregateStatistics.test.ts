@@ -72,7 +72,19 @@ test("returns empty breakdowns for an empty claim list", () => {
   expect(stats.refundBreakdown.customerVoucher.value).toBe(0);
 });
 
-test("buckets weekly claim counts by language and totals them", () => {
+test("cumulates the claims of each week with the previous weeks", () => {
+  const claims = [
+    ...Array.from({ length: 2 }, () => buildClaim({ dateOfReceivedClaim: "2024-10-01" })), // ISO week 40
+    ...Array.from({ length: 3 }, () => buildClaim({ dateOfReceivedClaim: "2024-10-08" })), // ISO week 41
+    buildClaim({ dateOfReceivedClaim: "2024-10-15" }), // ISO week 42
+  ];
+
+  const { weeklyLanguageCounts } = aggregateStatistics(claims);
+
+  expect(weeklyLanguageCounts.map((entry) => entry.total)).toEqual([2, 5, 6]);
+});
+
+test("buckets cumulated weekly claim counts by language and totals them", () => {
   const claims = [
     buildClaim({ language: "Fr", dateOfReceivedClaim: "2024-10-01" }), // ISO week 40
     buildClaim({ language: "Fr", dateOfReceivedClaim: "2024-10-02" }), // same ISO week 40
@@ -84,7 +96,7 @@ test("buckets weekly claim counts by language and totals them", () => {
 
   expect(weeklyLanguageCounts).toEqual([
     { week: "S40", Fr: 2, Nl: 1, En: 0, total: 3 },
-    { week: "S2", Fr: 0, Nl: 0, En: 1, total: 1 },
+    { week: "S2", Fr: 2, Nl: 1, En: 1, total: 4 },
   ]);
 });
 
