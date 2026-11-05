@@ -11,20 +11,25 @@ const ClaimsBySeasonResponseSchema = z.array(ClaimResponseSchema);
 // Mirrors ClaimApi's RouteConsts.ClaimsBySeason ("/api/v1.0/Claim/by-season/{seasonValue}").
 const claimsBySeasonUrl = (seasonValue: string) => `/api/v1.0/Claim/by-season/${seasonValue}`;
 
+interface LoadedSeason {
+  seasonValue: string;
+  claims: ClaimResponse[];
+}
+
 const useSeasonStatistics = (seasonValue: string) => {
-  const { isLoading, request } = useApi(ClaimsBySeasonResponseSchema);
-  const [claims, setClaims] = useState<ClaimResponse[]>([]);
+  const { request } = useApi(ClaimsBySeasonResponseSchema);
+  const [loaded, setLoaded] = useState<LoadedSeason | null>(null);
 
   useEffect(() => {
     if (!seasonValue) {
-      setClaims([]);
+      setLoaded(null);
       return;
     }
 
     let isCancelled = false;
     request({ method: "GET", url: claimsBySeasonUrl(seasonValue) }).then((result) => {
       if (!isCancelled) {
-        setClaims(result ?? []);
+        setLoaded({ seasonValue, claims: result ?? [] });
       }
     });
 
@@ -33,7 +38,10 @@ const useSeasonStatistics = (seasonValue: string) => {
     };
   }, [seasonValue, request]);
 
-  const stats = useMemo(() => aggregateStatistics(claims), [claims]);
+  const stats = useMemo(() => aggregateStatistics(loaded?.claims ?? []), [loaded]);
+
+  // Not useApi's isLoading: it is false until the first request starts, and an abandoned request turns it off too early.
+  const isLoading = Boolean(seasonValue) && loaded?.seasonValue !== seasonValue;
 
   return { stats, isLoading };
 };

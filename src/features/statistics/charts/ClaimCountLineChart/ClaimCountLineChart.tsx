@@ -1,5 +1,6 @@
 import { Line } from "react-chartjs-2";
 import "features/statistics/charts/chartSetup";
+import ChartLoader from "features/statistics/components/ChartLoader/ChartLoader";
 import { WeeklyLanguageCount } from "features/statistics/types/statistics";
 import { LANGUAGE_COLORS } from "features/statistics/utils/statisticsColors";
 import "features/statistics/charts/ClaimCountLineChart/ClaimCountLineChart.scss";
@@ -7,9 +8,10 @@ import "features/statistics/charts/ClaimCountLineChart/ClaimCountLineChart.scss"
 export interface ClaimCountLineChartProps {
   title: string;
   weeklyLanguageCounts: WeeklyLanguageCount[];
+  isLoading: boolean;
 }
 
-const ClaimCountLineChart = ({ title, weeklyLanguageCounts }: ClaimCountLineChartProps) => {
+const ClaimCountLineChart = ({ title, weeklyLanguageCounts, isLoading }: ClaimCountLineChartProps) => {
   const data = {
     labels: weeklyLanguageCounts.map((entry) => entry.week),
     datasets: [
@@ -67,7 +69,7 @@ const ClaimCountLineChart = ({ title, weeklyLanguageCounts }: ClaimCountLineChar
     <div className="claim-count-line-chart">
       <h3 className="claim-count-line-chart__title">{title}</h3>
       <div className="claim-count-line-chart__canvas">
-        <Line data={data} options={options} />
+        {isLoading ? <ChartLoader /> : <Line data={data} options={options} />}
       </div>
     </div>
   );

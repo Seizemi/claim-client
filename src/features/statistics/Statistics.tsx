@@ -7,7 +7,8 @@ import { useStatistics } from "features/statistics/useStatistics";
 import "features/statistics/Statistics.scss";
 
 const Statistics = () => {
-  const { season1, setSeason1, season2, setSeason2, activeTab, setActiveTab, stats1, stats2 } = useStatistics();
+  const { season1, setSeason1, season2, setSeason2, activeTab, setActiveTab, stats1, stats2, isLoading1, isLoading2 } =
+    useStatistics();
 
   return (
     <div className="statistics">
@@ -18,6 +19,8 @@ const Statistics = () => {
           <ReclamationTab
             stats1={stats1}
             stats2={stats2}
+            isLoading1={isLoading1}
+            isLoading2={isLoading2}
             seasonSelector={
               <SeasonSelectorPanel
                 season1={season1}
@@ -32,6 +35,8 @@ const Statistics = () => {
           <SolutionTab
             stats1={stats1}
             stats2={stats2}
+            isLoading1={isLoading1}
+            isLoading2={isLoading2}
             seasonSelector={
               <SeasonSelectorPanel
                 season1={season1}
